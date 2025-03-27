@@ -65,8 +65,8 @@ You can install Postman via this website: https://www.postman.com/downloads/
     -   [V] Commit: `Create SubscriberRequest model struct.`
     -   [V] Commit: `Create Notification database and Notification repository struct skeleton.`
     -   [V] Commit: `Implement add function in Notification repository.`
-    -   [ ] Commit: `Implement list_all_as_string function in Notification repository.`
-    -   [ ] Write answers of your learning module's "Reflection Subscriber-1" questions in this README.
+    -   [V] Commit: `Implement list_all_as_string function in Notification repository.`
+    -   [V] Write answers of your learning module's "Reflection Subscriber-1" questions in this README.
 -   **STAGE 3: Implement services and controllers**
     -   [ ] Commit: `Create Notification service struct skeleton.`
     -   [ ] Commit: `Implement subscribe function in Notification service.`
@@ -85,5 +85,11 @@ This is the place for you to write reflections:
 ### Mandatory (Subscriber) Reflections
 
 #### Reflection Subscriber-1
+
+1. Penggunaan `RwLock` dalam tutorial ini sangat penting karena struktur data `Vec` diakses oleh banyak thread secara bersamaan, baik untuk membaca maupun menulis. Dengan `RwLock`, beberapa thread dapat membaca data secara paralel tanpa saling mengganggu, selama tidak ada thread yang sedang melakukan penulisan. Pendekatan ini sangat efisien dalam kasus ini, karena sebagian besar operasi, seperti menampilkan daftar notifikasi, hanya memerlukan akses baca.  
+
+Di sisi lain, `Mutex` hanya mengizinkan satu thread untuk mengakses data pada satu waktu, baik untuk membaca maupun menulis. Jika menggunakan `Mutex`, bahkan operasi membaca sederhana pun harus menunggu giliran, yang dapat memperlambat sistem secara signifikan, terutama saat banyak pembacaan terjadi secara bersamaan.
+
+2. Rust tidak mengizinkan mutasi langsung terhadap variabel `static` seperti yang dilakukan di Java, karena hal ini dapat menyebabkan race condition dan akses data yang tidak aman secara bawaan. Untuk memastikan keamanan dan konsistensi data dalam lingkungan multithreaded, Rust mewajibkan penggunaan mekanisme sinkronisasi seperti `RwLock` atau `Mutex`. Selain itu, variabel global yang dapat diubah harus didefinisikan menggunakan bantuan `crate` seperti `lazy_static`, sehingga akses terhadap data tetap terkontrol dan aman.
 
 #### Reflection Subscriber-2
